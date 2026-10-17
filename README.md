@@ -156,7 +156,7 @@ CUDA_VISIBLE_DEVICES=0 python -u -m chain_talker train \
   --log-dir /root/tf-logs --run-name dailytalk_llm
 ```
 
-### 3.2 Train Flow
+### 3.2 Train Synthesizer
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python -u -m chain_talker train \
