@@ -101,9 +101,6 @@ Directory structure after processing:
 
 ```text
 data/dailytalk/
-├── train/<dialogue_id>/*.wav, *.lab, *.caption.lab
-├── valid/<dialogue_id>/*.wav, *.lab, *.caption.lab
-├── test/<dialogue_id>/*.wav, *.lab, *.caption.lab
 ├── utterances.jsonl
 ├── dialogue_splits.json
 ├── train.jsonl
