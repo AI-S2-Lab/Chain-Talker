@@ -1,0 +1,111 @@
+{
+  "cosyvoice_model": "iic/CosyVoice-300M-25Hz",
+  "files": [
+    {
+      "Path": "campplus.onnx",
+      "Revision": "4b1366ec9f9b117c7ed7a19296cb80087a440eb3",
+      "Sha256": "a6ac6a63997761ae2997373e2ee1c47040854b4b759ea41ec48e4e42df0f4d73",
+      "Size": 28303423
+    },
+    {
+      "Path": "configuration.json",
+      "Revision": "815e5a6716cbfa311997774f014072ace4623b8e",
+      "Sha256": "c502b6328c67638b401df8dd05de89e9e8d1cff9cd0ada10dfbdbe13556c20de",
+      "Size": 47
+    },
+    {
+      "Path": "cosyvoice.yaml",
+      "Revision": "4b1366ec9f9b117c7ed7a19296cb80087a440eb3",
+      "Sha256": "903db0a1e99dd545839144bbaa9ad119d1389fb3cbac5b5b6b9605b0f4b6151d",
+      "Size": 6433
+    },
+    {
+      "Path": "flow.pt",
+      "Revision": "4b1366ec9f9b117c7ed7a19296cb80087a440eb3",
+      "Sha256": "1411de192039a21d53f0bf1968feb50586ce71d81ea1443f8163f4d1c46c5455",
+      "Size": 419901370
+    },
+    {
+      "Path": "hift.pt",
+      "Revision": "4b1366ec9f9b117c7ed7a19296cb80087a440eb3",
+      "Sha256": "91e679b6ca1eff71187ffb4f3ab0444935594cdcc20a9bd12afad111ef8d6012",
+      "Size": 81896716
+    },
+    {
+      "Path": "llm.pt",
+      "Revision": "4b1366ec9f9b117c7ed7a19296cb80087a440eb3",
+      "Sha256": "23bc18a6d53b516868c7827fdedfd86df16642913e168ed6949fe07464c7d6ae",
+      "Size": 1260708412
+    },
+    {
+      "Path": "speech_tokenizer_v1.onnx",
+      "Revision": "4b1366ec9f9b117c7ed7a19296cb80087a440eb3",
+      "Sha256": "56285ddd4a83e883ee0cb9f8d69c1089b53a94b1f78ff7e4a0224a27eb4cb486",
+      "Size": 522625011
+    }
+  ],
+  "sentence_encoder": "sentence-transformers/distiluse-base-multilingual-cased-v1",
+  "sentence_encoder_revision": "826fee3d516ebb14987355af373f5b69101c7006",
+  "sentence_encoder_files": [
+    {
+      "path": "config.json",
+      "sha256": "3160640e4ce35901d951dc929e803c828d4b086fb309dd12369f4106d66ade4f",
+      "size": 556
+    },
+    {
+      "path": "config_sentence_transformers.json",
+      "sha256": "b8c64b5cece00d8424b4896ea75b512b6008576088497609dfeb6bd63e6d36b8",
+      "size": 122
+    },
+    {
+      "path": "modules.json",
+      "sha256": "f83ea5d68ac85ec15f650b350f0dc37b03d63abd60442f518e14c06f479beee6",
+      "size": 341
+    },
+    {
+      "path": "sentence_bert_config.json",
+      "sha256": "70f4448f31320443fe3557cacea5abf2dcc4915dda8c80646bec9f3bb0aa5a1f",
+      "size": 53
+    },
+    {
+      "path": "model.safetensors",
+      "sha256": "a8c22f695296511ee5aa449753e6ac8f6e6b72b37323c7c59235dd74c7f74bd1",
+      "size": 538947416
+    },
+    {
+      "path": "special_tokens_map.json",
+      "sha256": "303df45a03609e4ead04bc3dc1536d0ab19b5358db685b6f3da123d05ec200e3",
+      "size": 112
+    },
+    {
+      "path": "tokenizer.json",
+      "sha256": "5b4e1a8171c81dfd666ae40265b9530c6e0b3d53923fe8ac493dcc84229adf81",
+      "size": 1961847
+    },
+    {
+      "path": "tokenizer_config.json",
+      "sha256": "80d83a2078632f19353e410c7d7d2582d6f44a9818effa5114cc1146dd71ac8b",
+      "size": 452
+    },
+    {
+      "path": "vocab.txt",
+      "sha256": "fe0fda7c425b48c516fc8f160d594c8022a0808447475c1a7c6d6479763f310c",
+      "size": 995526
+    },
+    {
+      "path": "2_Dense\\config.json",
+      "sha256": "3f8cb931199629aac321339504a3258b5de76b568bf718d724cd921bcd22bd14",
+      "size": 114
+    },
+    {
+      "path": "2_Dense\\model.safetensors",
+      "sha256": "f8893703d8a6b640a8e4f90bbe2017fc0e7a792ad62daf6f723adf618f5d444f",
+      "size": 1575104
+    },
+    {
+      "path": "1_Pooling\\config.json",
+      "sha256": "a37f83ada23e7887be6b88f4998927dbeac0038af301553c7cd5461413bf1a56",
+      "size": 190
+    }
+  ]
+}
