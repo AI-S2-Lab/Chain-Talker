@@ -8,7 +8,7 @@ import wave
 from collections import Counter
 from pathlib import Path
 
-from .runtime import ROOT, project_path, sha256, write_json, write_jsonl
+from .runtime import ROOT, project_path, relative_path, sha256, write_json, write_jsonl
 
 SPLITS = ('train', 'valid', 'test')
 NAME = re.compile(r'(?P<turn>\d+)_(?P<speaker>\d+)_d(?P<dialogue>\d+)\.wav')
@@ -70,12 +70,12 @@ def prepare(source, output):
                 record = {'id': 'dailyTalk_'+wav.stem, 'dialogue_id': dialogue,
                           'turn_id': int(match['turn']), 'speaker': speaker,
                           'speaker_key': f'dailytalk:{dialogue}:{speaker}',
-                          'audio': wav.relative_to(source).as_posix(), 'text': text, 'caption': caption,
+                          'audio': relative_path(wav, output), 'text': text, 'caption': caption,
                           'emotion': '', 'attributes': {key: '' for key in ('gender', 'pitch', 'tempo', 'energy')},
                           'duration': duration, 'sample_rate': rate, 'channels': channels,
                           'audio_bytes': wav.stat().st_size, 'audio_sha256': hashes[wav],
-                          'text_lab': text_path.relative_to(source).as_posix(),
-                          'caption_lab': caption_path.relative_to(source).as_posix(),
+                          'text_lab': relative_path(text_path, output),
+                          'caption_lab': relative_path(caption_path, output),
                           'text_lab_sha256': hashes[text_path], 'caption_lab_sha256': hashes[caption_path],
                           'split': split}
                 turns.append(record)
@@ -95,14 +95,14 @@ def prepare(source, output):
             raise ValueError(f'No three-turn windows in split {split}')
     if len({row['id'] for row in records}) != len(records):
         raise ValueError('Duplicate utterance IDs.')
-    source_manifest = {'schema': 1, 'source_directory': '.',
-                       'files': [{'path': path.relative_to(source).as_posix(), 'sha256': digest, 'bytes': path.stat().st_size}
+    source_manifest = {'schema': 1, 'source_directory': relative_path(source, output),
+                       'files': [{'path': relative_path(path, output), 'sha256': digest, 'bytes': path.stat().st_size}
                                  for path, digest in sorted(sources.items())]}
     source_bytes = (json.dumps(source_manifest, ensure_ascii=False, indent=2)+'\n').encode('utf-8')
     source_hash = hashlib.sha256(source_bytes).hexdigest()
     report = {'schema': 2, 'source_manifest': 'source_manifest.json', 'source_manifest_sha256': source_hash,
-              'source_directory': '.', 'source_layout': 'wav_lab_caption',
-              'paths_relative_to': 'data_directory', 'source_files_copied': True, 'split_policy': 'preserve input train/valid/test directories',
+              'source_directory': relative_path(source, output), 'source_layout': 'wav_lab_caption',
+              'paths_relative_to': 'data_directory', 'source_files_copied': False, 'split_policy': 'preserve input train/valid/test directories',
               'seed': None, 'history_turns': 2, 'total_turns_including_target': 3, 'window_stride': 1,
               'input_rows': len(records), 'usable_rows': len(records), 'excluded_rows': 0,
               'dialogues': len(seen_dialogues), 'total_windows': sum(map(len, windows.values())),
@@ -117,16 +117,10 @@ def prepare(source, output):
               'policies': ['No dialogue overlaps between splits.',
                            'Two history turns plus target; stride one; no bridging gaps.',
                            'Speaker IDs are dialogue-local; references must occur in visible history.',
-                           'WAV and LAB files are copied unchanged into the output train/valid/test directories.']}
+                           'WAV and LAB files are referenced at the input location and are not copied.']}
     output.parent.mkdir(parents=True, exist_ok=True)
     temporary = Path(tempfile.mkdtemp(prefix='.'+output.name+'.preparing.', dir=output.parent)).resolve()
     try:
-        for path, expected in sorted(sources.items()):
-            destination = temporary/path.relative_to(source)
-            destination.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(path, destination)
-            if sha256(destination) != expected:
-                raise RuntimeError(f'Copied data does not match source: {path}')
         (temporary/'source_manifest.json').write_bytes(source_bytes)
         write_jsonl(temporary/'utterances.jsonl', records)
         write_json(temporary/'dialogue_splits.json', split_ids)
@@ -152,7 +146,7 @@ def prepare(source, output):
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description='Copy DailyTalk WAV/LAB files and prepare self-contained train/valid/test data.')
+    parser = argparse.ArgumentParser(description='Prepare train/valid/test manifests referencing existing DailyTalk WAV/LAB files.')
     parser.add_argument('--input', type=project_path, required=True, help='Directory containing train/valid/test WAV and LAB files.')
     parser.add_argument('--output', type=project_path, default=ROOT/'data/dailytalk')
     args = parser.parse_args(argv)

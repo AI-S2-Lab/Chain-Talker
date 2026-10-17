@@ -57,9 +57,9 @@ Install the matching CUDA builds of PyTorch and Torchaudio first, followed by th
 
 ## 2. Data Preparation (DailyTalk Example)
 
-### 2.1 Dataset Directory Structure
+### 2.1 Raw Data and Prepared Data
 
-Place the WAV/LAB files in [data/dailytalk_raw](data/dailytalk_raw) using the following structure:
+Place the original files in [data/dailytalk_raw](data/dailytalk_raw) using the following structure:
 
 ```text
 data/dailytalk_raw/
@@ -91,11 +91,13 @@ Each numbered directory corresponds to a complete dialogue. The files for each u
 | `<turn_id>_<speaker_id>_d<dialogue_id>.lab` | Transcript of the corresponding speech |
 | `<turn_id>_<speaker_id>_d<dialogue_id>.caption.lab` | Empathetic caption for the utterance |
 
-Run:
+From the project root, generate the manifests:
 
 ```bash
 python -m chain_talker prepare --input data/dailytalk_raw
 ```
+
+This command creates only the manifest files listed below in `data/dailytalk/`. Paths in the manifests refer to the original files, for example `../dailytalk_raw/train/2094/0_1_d2094.wav`. Keep the raw and prepared directories in the same relative layout when moving the project.
 
 Directory structure after processing:
 
