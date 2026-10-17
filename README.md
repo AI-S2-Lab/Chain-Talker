@@ -59,10 +59,10 @@ Install the matching CUDA builds of PyTorch and Torchaudio first, followed by th
 
 ### 2.1 Dataset Directory Structure
 
-Place the WAV/LAB files in [data/dailytalk](data/dailytalk) using the following structure:
+Place the WAV/LAB files in [data/dailytalk_raw](data/dailytalk_raw) using the following structure:
 
 ```text
-data/dailytalk/
+data/dailytalk_raw/
 ├── train/
 │   ├── 2094/
 │   │   ├── 0_1_d2094.wav
@@ -94,7 +94,7 @@ Each numbered directory corresponds to a complete dialogue. The files for each u
 Run:
 
 ```bash
-python -m chain_talker prepare --input data/dailytalk
+python -m chain_talker prepare --input data/dailytalk_raw
 ```
 
 Directory structure after processing:
